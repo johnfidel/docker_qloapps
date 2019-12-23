@@ -10,13 +10,20 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: example
       MYSQL_DATABASE: qloapps-db
-    
-  adminer:
-    image: adminer
+    ports:
+      - 3306:3306
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:4.8
+    container_name: phpmyadmin
     restart: always
     ports:
-      - 8080:8080
-
+     - 9000:80
+    volumes:
+     - /sessions
+    depends_on: 
+      - db
+    
   apache:
     build: ./php
     volumes:
